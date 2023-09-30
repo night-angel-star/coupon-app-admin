@@ -11,7 +11,7 @@ const AddForm = (props) => {
   const showDrawer = useSelector((state) => state.drawer.show);
   const dispatch = useDispatch();
   const initialData = useSelector(
-    (state) => state.data.data.filter((good) => good.no === editId)[0]
+    (state) => state.data.data.filter((good) => good.id === editId)[0]
   );
 
   useEffect(() => {

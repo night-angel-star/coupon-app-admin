@@ -6,6 +6,7 @@ export * from "./JobManage";
 export * from "./ProxyManage";
 export * from "./BrowserManage";
 export * from "./LoginManage";
+export * from "./MachineManage";
 export * from "./SurfingSiteManage";
 export * from "./HistoryView";
 export * from "./LogView";

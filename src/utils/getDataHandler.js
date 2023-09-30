@@ -13,10 +13,11 @@ const getDataHandler = (data, pageName) => {
       }, []);
     case "member":
       return data.members.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
             name: currentValue.name,
             level: currentValue.level_name,
             parent: currentValue.parent_name,
@@ -29,10 +30,11 @@ const getDataHandler = (data, pageName) => {
       );
     case "goods":
       return data.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
             key: currentValue.id,
             ...currentValue,
           },
@@ -41,10 +43,11 @@ const getDataHandler = (data, pageName) => {
       );
     case "proxy":
       return data.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
             key: currentValue.id,
             ...currentValue,
           },
@@ -53,10 +56,11 @@ const getDataHandler = (data, pageName) => {
       );
     case "browser":
       return data.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
             key: currentValue.id,
             ...currentValue,
           },
@@ -65,10 +69,24 @@ const getDataHandler = (data, pageName) => {
       );
     case "login":
       return data.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
+            key: currentValue.id,
+            ...currentValue,
+          },
+        ],
+        []
+      );
+    case "machine":
+      return data.reduce(
+        (accumulator, currentValue, i) => [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
             key: currentValue.id,
             ...currentValue,
           },
@@ -77,10 +95,24 @@ const getDataHandler = (data, pageName) => {
       );
     case "surfing":
       return data.reduce(
-        (accumulator, currentValue) => [
+        (accumulator, currentValue, i) => [
           ...accumulator,
           {
-            no: currentValue.id,
+            no: i + 1,
+            id: currentValue.id,
+            key: currentValue.id,
+            ...currentValue,
+          },
+        ],
+        []
+      );
+    case "job":
+      return data.reduce(
+        (accumulator, currentValue, i) => [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
             key: currentValue.id,
             ...currentValue,
           },

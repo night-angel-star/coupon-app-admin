@@ -1,3 +1,4 @@
+import { Tag } from "antd";
 const tableColumns = {
   level: [
     {
@@ -126,6 +127,33 @@ const tableColumns = {
       key: "password",
     },
   ],
+  machine: [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "IP",
+      dataIndex: "ip",
+      key: "ip",
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Machine ID",
+      dataIndex: "machine_id",
+      key: "machine_id",
+    },
+    {
+      title: "Last Access",
+      dataIndex: "last_access",
+      key: "last_access",
+    },
+  ],
   surfing: [
     {
       title: "No",
@@ -186,6 +214,42 @@ const tableColumns = {
       title: "Action",
       dataIndex: "action",
       key: "action",
+    },
+  ],
+  job: [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "login",
+      dataIndex: "login",
+      key: "login",
+    },
+    {
+      title: "machine",
+      dataIndex: "machine",
+      key: "machine",
+    },
+    {
+      title: "Goods",
+      dataIndex: "goods",
+      key: "goods",
+      render: (goods) =>
+        goods && goods.map((item, i) => <Tag key={i}>{item.name}</Tag>),
+    },
+    {
+      title: "Surfing",
+      dataIndex: "surfing",
+      key: "surfing",
+      render: (surfing) =>
+        surfing && surfing.map((item, i) => <Tag key={i}>{item.name}</Tag>),
     },
   ],
 };

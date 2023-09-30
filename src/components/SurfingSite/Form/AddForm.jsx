@@ -11,7 +11,7 @@ const AddForm = (props) => {
   const showDrawer = useSelector((state) => state.drawer.show);
   const dispatch = useDispatch();
   const initialData = useSelector(
-    (state) => state.data.data.filter((surfing) => surfing.no === editId)[0]
+    (state) => state.data.data.filter((surfing) => surfing.id === editId)[0]
   );
 
   useEffect(() => {
@@ -57,6 +57,7 @@ const AddForm = (props) => {
           }}
           onFinish={handleAdd}
           autoComplete="off"
+          form={form}
         >
           <Form.Item
             label="Name"

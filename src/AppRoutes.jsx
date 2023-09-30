@@ -9,6 +9,7 @@ import {
   ProxyManage,
   BrowserManage,
   LoginManage,
+  MachineManage,
   SurfingSiteManage,
   HistoryView,
   LogView,
@@ -24,9 +25,7 @@ const AppRoutes = [
         <Dashboard />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/">Dashboard</Link>
-    )
+    label: <Link to="/">Dashboard</Link>,
   },
   {
     path: "/level",
@@ -35,9 +34,7 @@ const AppRoutes = [
         <LevelManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/level">Level</Link>
-    )
+    label: <Link to="/level">Level</Link>,
   },
   {
     path: "/member",
@@ -46,9 +43,7 @@ const AppRoutes = [
         <MemberManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/member">Member</Link>
-    )
+    label: <Link to="/member">Member</Link>,
   },
   {
     path: "/goods",
@@ -57,9 +52,7 @@ const AppRoutes = [
         <GoodsManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/goods">Goods</Link>
-    )
+    label: <Link to="/goods">Goods</Link>,
   },
   {
     path: "/job",
@@ -68,9 +61,7 @@ const AppRoutes = [
         <JobManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/job">Jobs</Link>
-    )
+    label: <Link to="/job">Jobs</Link>,
   },
   {
     path: "/proxy",
@@ -79,9 +70,7 @@ const AppRoutes = [
         <ProxyManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/proxy">Proxy</Link>
-    )
+    label: <Link to="/proxy">Proxy</Link>,
   },
   {
     path: "/browser",
@@ -90,9 +79,7 @@ const AppRoutes = [
         <BrowserManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/browser">Browser</Link>
-    )
+    label: <Link to="/browser">Browser</Link>,
   },
   {
     path: "/login",
@@ -101,9 +88,16 @@ const AppRoutes = [
         <LoginManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/login">Login</Link>
-    )
+    label: <Link to="/login">Login</Link>,
+  },
+  {
+    path: "/machine",
+    element: (
+      <PrivateRoute>
+        <MachineManage />
+      </PrivateRoute>
+    ),
+    label: <Link to="/machine">Machine</Link>,
   },
   {
     path: "/surfing",
@@ -112,9 +106,7 @@ const AppRoutes = [
         <SurfingSiteManage />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/surfing">Surfing Site</Link>
-    )
+    label: <Link to="/surfing">Surfing Site</Link>,
   },
   {
     path: "/history",
@@ -123,9 +115,7 @@ const AppRoutes = [
         <HistoryView />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/history">History</Link>
-    )
+    label: <Link to="/history">History</Link>,
   },
   {
     path: "/log",
@@ -134,9 +124,7 @@ const AppRoutes = [
         <LogView />
       </PrivateRoute>
     ),
-    label: (
-      <Link to="/log">Log</Link>
-    )
+    label: <Link to="/log">Log</Link>,
   },
   {
     path: "/auth/login",

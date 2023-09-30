@@ -1,72 +1,48 @@
-// import DataTable from "@/components/Tables/DataTable";
-// import { Row, Space } from "antd";
-// import AddDrawer from "@/components/LevelManage/AddDrawer";
-// import Search from "@/components/Search";
-import { ExclamationCircleTwoTone } from "@ant-design/icons";
-export const JobManage = () => {
-  // const columns = [
-  //   {
-  //     title: 'No',
-  //     dataIndex: 'no',
-  //     key: 'no'
-  //   },
-  //   {
-  //     title: 'Name',
-  //     dataIndex: 'name',
-  //     key: 'name',
-  //   },
-  //   {
-  //     title: 'Nvid',
-  //     dataIndex: 'nvid',
-  //     key: 'nvid'
-  //   },
-  //   {
-  //     title: 'Keyword1',
-  //     dataIndex: 'keyword1',
-  //     key: 'keyword1'
-  //   },
-  //   {
-  //     title: 'Keyword2',
-  //     dataIndex: 'keyword2',
-  //     key: 'keyword2'
-  //   },
-  //   {
-  //     title: 'Keyword3',
-  //     dataIndex: 'keyword3',
-  //     key: 'keyword3'
-  //   }
-  // ];
-  // const searchFields = columns.reduce((accumulator, currentValue) => [...accumulator, currentValue.key], [])
-  // const data = [
-  //   {
-  //     no: 1,
-  //     name: "Watches",
-  //     nvid: 10031,
-  //     keyword1: "Rolex",
-  //     keyword2: "Clock",
-  //     keyword3: "Hand"
-  //   },
-  //   {
-  //     no: 1,
-  //     name: "Watches",
-  //     nvid: 10032,
-  //     keyword1: "abd",
-  //     keyword2: "we",
-  //     keyword3: "wefw"
-  //   },
-  // ];
-  return <div>
-    {/* <Row justify={"end"} className="p-2">
-      <Space>
-        <Search fields={searchFields} />
-        <AddDrawer />
-      </Space>
-    </Row>
-    <DataTable columns={columns} data={data} showAction /> */}
-    <ExclamationCircleTwoTone />
-    <h3>This page is for job manage. Future version will support this function.</h3>
+import DataTable from "@/components/Tables/DataTable";
+import { Row, Space, Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import Search from "@/components/Search";
+import tableColumns from "@/constant/tableColumns";
+import { showDrawer } from "@/redux/actions/drawer";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
-  </div>;
+export const JobManage = () => {
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const pageName = pathname.substring(1, pathname.length);
+  const permission = useSelector((state) =>
+    state.auth.isLoggedIn ? state.auth.user.permission : {}
+  );
+  const columns = tableColumns.job;
+  const searchFields = columns.reduce(
+    (accumulator, currentValue) => [...accumulator, currentValue.key],
+    []
+  );
+  const openDrawer = () => {
+    dispatch(
+      showDrawer({
+        id: 0,
+        title: "Add Job",
+        show: true,
+      })
+    );
+  };
+  return (
+    <div>
+      <Row justify={"end"} className="p-2">
+        <Space>
+          <Search fields={searchFields} />
+          {permission[pageName].add === 1 && (
+            <Button type="primary" icon={<PlusOutlined />} onClick={openDrawer}>
+              Add
+            </Button>
+          )}
+        </Space>
+      </Row>
+      <DataTable columns={columns} showAction />
+    </div>
+  );
 };
 
 export default JobManage;

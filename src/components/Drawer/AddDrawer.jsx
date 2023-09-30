@@ -12,6 +12,8 @@ import ProxyAddForm from "@/components/ProxyManage/Forms/AddForm";
 import BrowserAddForm from "@/components/BrowserManage/Forms/AddForm";
 import LoginAddForm from "@/components/LoginManage/Forms/AddForm";
 import SurfingSiteAddForm from "@/components/SurfingSite/Form/AddForm";
+import JobAddForm from "@/components/Job/Form/AddForm";
+import MachineAddForm from "@/components/MachineManage/Forms/AddForm";
 
 const AddDrawer = () => {
   const dispatch = useDispatch();
@@ -50,9 +52,12 @@ const AddDrawer = () => {
               return <BrowserAddForm />;
             case "login":
               return <LoginAddForm />;
+            case "machine":
+              return <MachineAddForm />;
             case "surfing":
               return <SurfingSiteAddForm />;
-
+            case "job":
+              return <JobAddForm />;
             default:
               return <div></div>;
           }
