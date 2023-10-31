@@ -250,3 +250,5 @@ export const AdvertisementManage = () => {
     </Row>
   );
 };
+
+export default AdvertisementManage;
