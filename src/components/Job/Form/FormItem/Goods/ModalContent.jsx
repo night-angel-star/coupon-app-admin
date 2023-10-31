@@ -55,11 +55,7 @@ const ModalContent = (props) => {
   const columns = [tableColumnsNo, ...tableColumnsRest];
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        scroll={{ x: "max-content" }}
-      ></Table>
+      <Table columns={columns} dataSource={data}></Table>
     </div>
   );
 };

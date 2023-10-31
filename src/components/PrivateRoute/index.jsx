@@ -30,6 +30,7 @@ export default function PrivateRoute({ children }) {
         pageName === "coupon" ||
         pageName === "brand" ||
         pageName === "advertisement" ||
+        pageName === "coupon_user" ||
         (permission[pageName] && permission[pageName].view === 1)
       )
     ) {
@@ -45,6 +46,7 @@ export default function PrivateRoute({ children }) {
       pageName === "coupon" ||
       pageName === "brand" ||
       pageName === "advertisement" ||
+      pageName === "coupon_user" ||
       (permission[pageName] && permission[pageName].view === 1)
     ) {
       return (

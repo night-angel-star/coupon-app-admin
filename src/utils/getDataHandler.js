@@ -80,6 +80,19 @@ const getDataHandler = (data, pageName) => {
         ],
         []
       );
+    case "coupon_user":
+      return data.reduce(
+        (accumulator, currentValue, i) => [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
+            key: currentValue.id,
+            ...currentValue,
+          },
+        ],
+        []
+      );
     case "machine":
       return data.reduce(
         (accumulator, currentValue, i) => [

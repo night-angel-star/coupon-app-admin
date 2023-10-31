@@ -128,7 +128,6 @@ const EditableDataTable = (props) => {
       <Table
         columns={showAction ? columnWithControl : columns}
         dataSource={filteredData}
-        scroll={{ x: "max-content" }}
       />
     </Spin>
   );

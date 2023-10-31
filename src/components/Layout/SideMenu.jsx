@@ -10,15 +10,18 @@ export const SideMenu = () => {
   const permission = useSelector((state) =>
     state.auth.isLoggedIn ? state.auth.user.permission : {}
   );
+  const level = useSelector((state) => state.auth.user.level);
   const dispatch = useDispatch();
   const items = AppRoutes.reduce((accumulator, currentValue) => {
     if (currentValue.label !== undefined) {
       if (
         currentValue.label.props.children === "Dashboard" ||
-        currentValue.label.props.children === "Coupon Product" ||
-        currentValue.label.props.children === "Coupon Brand" ||
-        currentValue.label.props.children === "Advertisement" ||
-        currentValue.label.props.children === "Coupon Category"
+        ((currentValue.label.props.children === "Coupon Product" ||
+          currentValue.label.props.children === "Coupon Brand" ||
+          currentValue.label.props.children === "Advertisement" ||
+          currentValue.label.props.children === "Coupon Category" ||
+          currentValue.label.props.children === "Coupon User") &&
+          level === 1)
       ) {
         return [
           ...accumulator,

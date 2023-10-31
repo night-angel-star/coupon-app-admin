@@ -35,11 +35,13 @@ const GoodsAdd = (props) => {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      fixed: "left",
     },
     ...restTableColumns,
     {
       title: "Action",
       key: "action",
+      fixed: "right",
       render: (item) => (
         <DeleteTwoTone
           twoToneColor="#eb2f96"

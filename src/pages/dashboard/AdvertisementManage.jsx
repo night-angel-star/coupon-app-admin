@@ -44,12 +44,45 @@ export const AdvertisementManage = () => {
   const [imageUrl3, setImageUrl3] = useState(
     `${API_URL}uploads/Advertisement3.jpg`
   );
+  const [imageUrl4, setImageUrl4] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl5, setImageUrl5] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl6, setImageUrl6] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl7, setImageUrl7] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl8, setImageUrl8] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl9, setImageUrl9] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+  const [imageUrl10, setImageUrl10] = useState(
+    `${API_URL}uploads/Advertisement3.jpg`
+  );
+
   const [images, setImages] = useState([]);
   React.useEffect(() => {
     dashboardService.getAdverts().then((response) => {
       setImages(response.adverts);
     });
-  }, [imageUrl1, imageUrl2, imageUrl3]);
+  }, [
+    imageUrl1,
+    imageUrl2,
+    imageUrl3,
+    imageUrl4,
+    imageUrl5,
+    imageUrl6,
+    imageUrl7,
+    imageUrl8,
+    imageUrl9,
+    imageUrl10,
+  ]);
   const handleChange1 = (info) => {
     if (info.file.status === "uploading") {
       setLoading(true);
@@ -89,6 +122,97 @@ export const AdvertisementManage = () => {
       });
     }
   };
+  const handleChange4 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl4(url);
+      });
+    }
+  };
+  const handleChange5 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl5(url);
+      });
+    }
+  };
+  const handleChange6 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl6(url);
+      });
+    }
+  };
+  const handleChange7 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl7(url);
+      });
+    }
+  };
+  const handleChange8 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl8(url);
+      });
+    }
+  };
+  const handleChange9 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl9(url);
+      });
+    }
+  };
+  const handleChange10 = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl10(url);
+      });
+    }
+  };
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -118,6 +242,27 @@ export const AdvertisementManage = () => {
                 break;
               case 2:
                 setImageUrl3("");
+                break;
+              case 3:
+                setImageUrl4("");
+                break;
+              case 4:
+                setImageUrl5("");
+                break;
+              case 5:
+                setImageUrl6("");
+                break;
+              case 6:
+                setImageUrl7("");
+                break;
+              case 7:
+                setImageUrl8("");
+                break;
+              case 8:
+                setImageUrl9("");
+                break;
+              case 9:
+                setImageUrl10("");
                 break;
               default:
                 break;
@@ -220,6 +365,216 @@ export const AdvertisementManage = () => {
           Delete
         </Button>
         <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 4)}
+          onChange={handleChange4}
+        >
+          {images[3] ? (
+            <img
+              src={imageUrl4}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(3)}
+          danger
+          disabled={!images[3]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 5)}
+          onChange={handleChange5}
+        >
+          {images[4] ? (
+            <img
+              src={imageUrl5}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(4)}
+          danger
+          disabled={!images[4]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 6)}
+          onChange={handleChange6}
+        >
+          {images[5] ? (
+            <img
+              src={imageUrl6}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(5)}
+          danger
+          disabled={!images[5]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 7)}
+          onChange={handleChange7}
+        >
+          {images[6] ? (
+            <img
+              src={imageUrl7}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(6)}
+          danger
+          disabled={!images[6]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 8)}
+          onChange={handleChange8}
+        >
+          {images[7] ? (
+            <img
+              src={imageUrl8}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(7)}
+          danger
+          disabled={!images[7]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 9)}
+          onChange={handleChange9}
+        >
+          {images[8] ? (
+            <img
+              src={imageUrl9}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(8)}
+          danger
+          disabled={!images[8]}
+        >
+          Delete
+        </Button>
+        <br />
+        <Upload
+          name="file"
+          listType="picture-card"
+          className="file-uploader"
+          showUploadList={false}
+          action={`${API_URL}file/upload`}
+          beforeUpload={(file) => beforeUpload(file, 10)}
+          onChange={handleChange10}
+        >
+          {images[9] ? (
+            <img
+              src={imageUrl10}
+              alt="file"
+              style={{
+                width: "100%",
+              }}
+            />
+          ) : (
+            uploadButton
+          )}
+        </Upload>
+        <Button
+          style={{ marginBottom: "20px" }}
+          onClick={() => onDeleteClick(9)}
+          danger
+          disabled={!images[9]}
+        >
+          Delete
+        </Button>
+        <br />
       </Col>
       <Col span={20}>
         <Carousel
@@ -243,6 +598,41 @@ export const AdvertisementManage = () => {
           {images[2] && (
             <div>
               <Image style={contentStyle} src={imageUrl3} />
+            </div>
+          )}
+          {images[3] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl4} />
+            </div>
+          )}
+          {images[4] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl5} />
+            </div>
+          )}
+          {images[5] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl6} />
+            </div>
+          )}
+          {images[6] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl7} />
+            </div>
+          )}
+          {images[7] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl8} />
+            </div>
+          )}
+          {images[8] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl9} />
+            </div>
+          )}
+          {images[9] && (
+            <div>
+              <Image style={contentStyle} src={imageUrl10} />
             </div>
           )}
         </Carousel>

@@ -17,6 +17,7 @@ import MachineAddForm from "../../components/MachineManage/Forms/AddForm";
 import CouponCategoryAddForm from "../../components/CouponCategoryManage/Forms/AddForm";
 import CouponAddForm from "../../components/CouponManage/Forms/AddForm";
 import BrandAddForm from "../../components/BrandManage/Forms/AddForm";
+import CouponUserAddForm from "../../components/CouponUserManage/Forms/AddForm";
 
 const AddDrawer = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const AddDrawer = () => {
               return <SurfingSiteAddForm />;
             case "job":
               return <JobAddForm />;
+            case "coupon_user":
+              return <CouponUserAddForm />;
             case "coupon_category":
               return <CouponCategoryAddForm />;
             case "coupon":

@@ -11,6 +11,9 @@ const MachineManage = lazy(() => import("./pages/dashboard/MachineManage"));
 const SurfingSiteManage = lazy(() =>
   import("./pages/dashboard/SurfingSiteManage")
 );
+const CouponUserManage = lazy(() =>
+  import("./pages/dashboard/CouponUserManage")
+);
 const CouponManage = lazy(() => import("./pages/dashboard/CouponManage"));
 const BrandManage = lazy(() => import("./pages/dashboard/BrandManage"));
 const CouponCategoryManage = lazy(() =>
@@ -118,6 +121,15 @@ const AppRoutes = [
       </PrivateRoute>
     ),
     label: <div>Surfing</div>,
+  },
+  {
+    path: "coupon_user",
+    element: (
+      <PrivateRoute>
+        <CouponUserManage />
+      </PrivateRoute>
+    ),
+    label: <div>Coupon User</div>,
   },
   {
     path: "coupon_category",
