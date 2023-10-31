@@ -1,12 +1,14 @@
 import { Form, Input, Button, Spin } from "antd";
 import LoginAdd from "./FormItem/Login/LoginAdd";
 import MachineAdd from "./FormItem/Machine/MachineAdd";
+import ProxyAdd from "./FormItem/Proxy/ProxyAdd";
+import BrowserAdd from "./FormItem/Browser/BrowserAdd";
 import GoodsAdd from "./FormItem/Goods/GoodsAdd";
 import SurfingAdd from "./FormItem/Surfing/SurfingAdd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "@/redux/actions/data";
-import { hideDrawer } from "@/redux/actions/drawer";
+import { addData } from "../../../redux/actions/data";
+import { hideDrawer } from "../../../redux/actions/drawer";
 
 const AddForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -14,15 +16,16 @@ const AddForm = (props) => {
   const showDrawer = useSelector((state) => state.drawer.show);
   const dispatch = useDispatch();
   const initialData = useSelector(
-    (state) => state.data.data.filter((login) => login.id === editId)[0]
+    (state) => state.data.data.filter((job) => job.id === editId)[0]
   );
 
   useEffect(() => {
     if (showDrawer === true) {
       form.resetFields();
+
       try {
         if (editId !== 0) {
-          form.setFieldsValue(initialData);
+          form.setFieldValue("name", initialData.name);
         }
       } catch {}
     }
@@ -37,6 +40,7 @@ const AddForm = (props) => {
       payload = { ...payload, id: editId };
     }
     try {
+      console.log(payload);
       await dispatch(addData("job", payload, editId !== 0));
       dispatch(hideDrawer());
       setLoading(false);
@@ -50,10 +54,10 @@ const AddForm = (props) => {
       <div className="my-10">
         <Form
           labelCol={{
-            span: 8,
+            span: 4,
           }}
           wrapperCol={{
-            span: 16,
+            span: 20,
           }}
           style={{
             maxWidth: 600,
@@ -75,10 +79,12 @@ const AddForm = (props) => {
             <Input />
           </Form.Item>
 
-          <LoginAdd form={form} />
-          <MachineAdd form={form} />
-          <GoodsAdd form={form} />
-          <SurfingAdd form={form} />
+          <LoginAdd form={form} initialData={initialData?.login} />
+          <MachineAdd form={form} initialData={initialData?.machine} />
+          <ProxyAdd form={form} initialData={initialData?.proxy} />
+          <BrowserAdd form={form} initialData={initialData?.browser} />
+          <GoodsAdd form={form} initialData={initialData?.goods} />
+          <SurfingAdd form={form} initialData={initialData?.surfing} />
 
           <Form.Item
             wrapperCol={{
@@ -87,7 +93,7 @@ const AddForm = (props) => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

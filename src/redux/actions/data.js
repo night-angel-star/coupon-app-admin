@@ -1,10 +1,11 @@
 import { SET_DATA, CLEAR_DATA } from "./types";
-import DashboardService from "@/services/dashboard.service";
+import DashboardService from "../../services/dashboard.service";
 import { message } from "antd";
-import getDataHandler from "@/utils/getDataHandler";
+import getDataHandler from "../../utils/getDataHandler";
+import { logout } from "./auth";
 
-export const getData = (pageName) => (dispatch) => {
-  return DashboardService.getList(pageName).then(
+export const getData = (pageName, params) => (dispatch) => {
+  return DashboardService.getList(pageName, params).then(
     (data) => {
       const result = getDataHandler(data.result, pageName);
       dispatch({
@@ -15,6 +16,14 @@ export const getData = (pageName) => (dispatch) => {
       return Promise.resolve();
     },
     (error) => {
+      if (error.response.data.status === 401) {
+        message.error("Unauthorized");
+        dispatch(logout());
+      } else {
+        console.log(error);
+        message.error("Get Data Exception");
+      }
+
       return Promise.reject();
     }
   );
@@ -33,23 +42,29 @@ export const addData = (pageName, payload, isEdit) => (dispatch) => {
             return Promise.resolve();
           })
           .catch((err) => {
-            message.error("Problem.");
+            message.error("Get Data Problem.");
+            console.log(err);
             return Promise.reject();
           });
       } else {
-        message.error("Problem.");
+        message.error("Add Data Problem.");
         return Promise.reject("Server problem.");
       }
     },
     (error) => {
-      message.error("Problem.");
+      if (error.response.data.status === 401) {
+        message.error("Unauthorized");
+        dispatch(logout());
+      } else {
+        console.log(error);
+        message.error("Add Data Exception");
+      }
       return Promise.reject(error);
     }
   );
 };
 
 export const removeData = (pageName, payload) => (dispatch) => {
-  console.log(pageName, payload);
   return DashboardService.del(pageName, payload).then(
     (data) => {
       if (data.status === 201) {

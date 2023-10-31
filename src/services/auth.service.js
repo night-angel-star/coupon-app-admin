@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:8000/";
+import API_URL from "./API";
 
 const login = (payload) => {
   return axios.post(API_URL + "login", payload).then((response) => {
@@ -13,6 +12,7 @@ const login = (payload) => {
 
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("persist:root");
 };
 
 const authService = {

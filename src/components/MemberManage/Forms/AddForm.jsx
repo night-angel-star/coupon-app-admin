@@ -1,29 +1,33 @@
 import { Form, Input, Button, Select, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import DashboardService from "@/services/dashboard.service";
-import { addData } from "@/redux/actions/data";
-import { hideDrawer } from "@/redux/actions/drawer";
+import DashboardService from "../../../services/dashboard.service";
+import { addData } from "../../../redux/actions/data";
+import { hideDrawer } from "../../../redux/actions/drawer";
 
 const AddForm = () => {
   const dispatch = useDispatch();
-  const { id, name, level } = useSelector((state) => state.auth.user);
-  const userData = { id: id, name: name, level_id: level };
+  const { id, name, level, parent } = useSelector((state) => state.auth.user);
+  const userData = { id: id, name: name, level_id: level, parent_id: parent };
   const [parentOptions, setParentOptions] = useState([userData]);
   const [parentLevelFilterId, setParentLevelFilterId] = useState(0);
   const [levelOptions, setLevelOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const showDrawer = useSelector((state) => state.drawer.show);
   const editId = useSelector((state) => state.drawer.id);
+  const [parentOptionLoad, setParentOptionLoad] = useState(false);
   const initialUserData = useSelector(
     (state) => state.data.data.filter((user) => user.id === editId)[0]
   );
+
+  const [form] = Form.useForm();
+
   useEffect(() => {
     if (showDrawer) {
       const getParentData = async () => {
         try {
           const data = await DashboardService.getFamily();
-          setParentOptions([
+          await setParentOptions([
             userData,
             ...data.reduce(
               (accumulator, currentValue) => [
@@ -37,6 +41,7 @@ const AddForm = () => {
               []
             ),
           ]);
+          setParentOptionLoad(true);
         } catch (error) {
           console.log(error);
         }
@@ -45,21 +50,23 @@ const AddForm = () => {
       const getLevelData = async () => {
         try {
           const data = await DashboardService.getList("level");
-          setLevelOptions(
-            data.result.reduce(
-              (accumulator, currentValue) =>
-                id < currentValue.id
-                  ? [
-                      ...accumulator,
-                      {
-                        id: currentValue.id,
-                        name: currentValue.name,
-                      },
-                    ]
-                  : accumulator,
-              []
-            )
+          const levelOptionFromServer = await data.result.reduce(
+            (accumulator, currentValue) => {
+              if (level < currentValue.id) {
+                return [
+                  ...accumulator,
+                  {
+                    id: currentValue.id,
+                    name: currentValue.name,
+                  },
+                ];
+              } else {
+                return accumulator;
+              }
+            },
+            []
           );
+          await setLevelOptions(levelOptionFromServer);
         } catch (error) {
           console.log(error);
         }
@@ -79,6 +86,13 @@ const AddForm = () => {
     if (editId !== 0) {
       payload = { ...payload, id: editId };
     }
+    if (editId === userData.id) {
+      payload = {
+        ...payload,
+        level_id: userData.level_id,
+        parent: userData.parent_id,
+      };
+    }
     setLoading(true);
     try {
       await dispatch(addData("member", payload, editId !== 0));
@@ -91,10 +105,28 @@ const AddForm = () => {
     }
   };
 
-  const [form] = Form.useForm();
-  const onChangeFilter = (value) => {
-    setParentLevelFilterId(value - 1);
+  const onChangeFilter = async (value) => {
+    await setParentLevelFilterId(value - 1);
     form.resetFields(["parent"]);
+    const tempParent = await parentOptions.reduce(
+      (accumulator, currentValue) =>
+        currentValue.level_id === value - 1
+          ? [
+              ...accumulator,
+              { value: currentValue.id, label: currentValue.name },
+            ]
+          : accumulator,
+      []
+    );
+    let index = 0;
+    if (editId !== 0) {
+      index = await tempParent.findIndex((option) => {
+        return option.value === Number.parseInt(initialUserData?.parent_id);
+      });
+    }
+    form.setFieldsValue({
+      parent: tempParent[index]?.value,
+    });
   };
 
   const validatePassword = (_, value) => {
@@ -106,22 +138,45 @@ const AddForm = () => {
 
   useEffect(() => {
     form.resetFields();
-    if (editId !== 0) {
-      try {
-        console.log(initialUserData);
-        form.setFieldsValue({
-          name: initialUserData.name,
-          level_id: initialUserData.level_id,
-          parent: initialUserData.parent_id,
-        });
-      } catch {}
+    if (parentOptionLoad) {
+      const autoGenerateField = async () => {
+        if (editId !== 0) {
+          try {
+            if (editId === userData.id) {
+              console.log(level);
+              form.setFieldsValue({
+                name: userData.name,
+              });
+              form.setFieldsValue({
+                level_id: initialUserData.level,
+              });
+              form.setFieldsValue({
+                parent: initialUserData.parent,
+              });
+            } else {
+              form.setFieldsValue({
+                name: initialUserData.name,
+              });
+
+              form.setFieldsValue({
+                level_id: initialUserData.level_id,
+              });
+
+              onChangeFilter(initialUserData.level_id);
+            }
+          } catch {}
+        } else {
+          await onChangeFilter(userData.level_id + 1);
+          form.setFieldsValue({
+            level_id: userData.level_id + 1,
+          });
+        }
+      };
+      autoGenerateField();
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editId, form]);
+  }, [editId, form, parentOptionLoad]);
 
-  useEffect(() => {
-    console.log(parentOptions);
-  }, [parentOptions]);
   return (
     <Spin spinning={loading}>
       <div className="my-10">
@@ -155,51 +210,56 @@ const AddForm = () => {
           <Form.Item
             label="Level"
             name="level_id"
+            // initialValue={levelOptions[0].id}
             rules={[
               {
-                required: true,
+                required: editId !== userData.id,
                 message: "Please select member level!",
               },
             ]}
           >
             <Select
-              showSearch
+              // showSearch
               placeholder="Select a level"
-              optionFilterProp="children"
+              // optionFilterProp="children"
               onChange={onChangeFilter}
+              disabled={editId === userData.id ? true : false}
               options={levelOptions.reduce(
                 (accumulator, currentValue) => [
                   ...accumulator,
                   {
                     value: currentValue.id,
-                    label: `${currentValue.id} : ${currentValue.name}`,
+                    label: currentValue.name,
                   },
                 ],
                 []
               )}
             />
           </Form.Item>
-
           <Form.Item
             label="Parent"
             name="parent"
             rules={[
               {
-                required: true,
-                message: "Please select member parent!",
+                required: editId !== userData.id,
+                message: "Please select member level!",
               },
             ]}
           >
             <Select
-              showSearch
+              // showSearch
               placeholder="Select a member"
-              optionFilterProp="children"
+              disabled={editId === userData.id ? true : false}
+              // optionFilterProp="children"
               options={parentOptions.reduce(
                 (accumulator, currentValue) =>
                   currentValue.level_id === parentLevelFilterId
                     ? [
                         ...accumulator,
-                        { value: currentValue.id, label: currentValue.name },
+                        {
+                          value: currentValue.id,
+                          label: currentValue.name,
+                        },
                       ]
                     : accumulator,
                 []
@@ -211,11 +271,11 @@ const AddForm = () => {
             name="password"
             rules={[
               {
-                required: true,
+                required: editId === 0,
                 message: "Please input member password!",
               },
               {
-                validator: validatePassword,
+                validator: editId === 0 ? validatePassword : "",
               },
             ]}
             hasFeedback
@@ -229,7 +289,7 @@ const AddForm = () => {
             hasFeedback
             rules={[
               {
-                required: true,
+                required: editId === 0,
                 message: "Please confirm member password!",
               },
               ({ getFieldValue }) => ({
@@ -254,7 +314,7 @@ const AddForm = () => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

@@ -4,34 +4,40 @@ import {
   ProConfigProvider,
   ProFormText,
 } from "@ant-design/pro-components";
-import { Spin, Alert } from "antd"
+import { Spin, Alert } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "@/redux/actions/auth";
-import { useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { login } from "../../redux/actions/auth";
+// import { useNavigate, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { setRoute } from "../../redux/actions/route";
 
 export const Login = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const message=useSelector(state=>state.message.message);
+  const message = useSelector((state) => state.message.message);
 
   const [loading, setLoading] = useState(false);
 
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  if (isLoggedIn) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(setRoute("dashboard"));
+    }
+  }, [isLoggedIn, dispatch]);
 
   const handleSubmit = (values) => {
     setLoading(true);
     dispatch(login(values))
       .then(() => {
         setLoading(false);
-        navigate("/");
-        window.location.reload();
+        // navigate("/");
+        // window.location.reload();
+        dispatch(setRoute("dashboard"));
       })
-      .catch(() => { setLoading(false) });
+      .catch(() => {
+        setLoading(false);
+      });
   };
   return (
     <Spin spinning={loading}>
@@ -48,9 +54,14 @@ export const Login = () => {
             onFinish={handleSubmit}
           >
             <>
-            {
-              message&&<Alert message={message} type="error" className="my-2" showIcon />
-            }
+              {message && (
+                <Alert
+                  message={message}
+                  type="error"
+                  className="my-2"
+                  showIcon
+                />
+              )}
               <ProFormText
                 name="name"
                 fieldProps={{

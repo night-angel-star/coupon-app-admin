@@ -1,24 +1,35 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Row, Col, message } from "antd";
 import { SideMenu } from "../Layout/SideMenu";
 import AppHeader from "../Layout/AppHeader";
-import { useLocation } from "react-router-dom";
-import AddDrawer from "@/components/Drawer/AddDrawer";
+// import { useLocation } from "react-router-dom";
+import AddDrawer from "../../components/Drawer/AddDrawer";
+import { useDispatch } from "react-redux";
+import { setRoute } from "../../redux/actions/route";
 
 export default function PrivateRoute({ children }) {
-  const { pathname } = useLocation();
-  const pageName = pathname.substring(1, pathname.length);
+  //const { pathname } = useLocation();
+  //const pageName = pathname.substring(1, pathname.length);
+  const pageName = useSelector((state) => state.route.name);
   const logged = useSelector((state) => state.auth.isLoggedIn);
   const permission = useSelector((state) =>
     state.auth.isLoggedIn ? state.auth.user.permission : {}
   );
+  const dispatch = useDispatch();
+  const navigateTo = (payload) => {
+    dispatch(setRoute(payload));
+  };
 
   React.useEffect(() => {
     if (
       !(
-        pageName === "" ||
+        pageName === "dashboard" ||
+        pageName === "coupon_category" ||
+        pageName === "coupon" ||
+        pageName === "brand" ||
+        pageName === "advertisement" ||
         (permission[pageName] && permission[pageName].view === 1)
       )
     ) {
@@ -27,10 +38,13 @@ export default function PrivateRoute({ children }) {
       }
     }
   }, [pageName, permission]);
-
   if (logged) {
     if (
-      pageName === "" ||
+      pageName === "dashboard" ||
+      pageName === "coupon_category" ||
+      pageName === "coupon" ||
+      pageName === "brand" ||
+      pageName === "advertisement" ||
       (permission[pageName] && permission[pageName].view === 1)
     ) {
       return (
@@ -50,9 +64,9 @@ export default function PrivateRoute({ children }) {
         </>
       );
     } else {
-      return <Navigate to="/" />;
+      return <div onLoad={() => navigateTo("dashboard")} />;
     }
   } else {
-    return <Navigate to="/auth/login" />;
+    return <div onLoad={() => navigateTo("auth/login")} />;
   }
 }

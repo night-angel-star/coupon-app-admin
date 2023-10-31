@@ -107,6 +107,26 @@ const getDataHandler = (data, pageName) => {
         []
       );
     case "job":
+      return data.jobs.reduce(
+        (accumulator, currentValue, i) => [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
+            key: currentValue.id,
+            login_user: currentValue.login ? currentValue.login.user : "",
+            machine_id: currentValue.machine
+              ? currentValue.machine.machine_id
+              : "",
+            proxy_ip: currentValue.proxy?.ip,
+            browser_name: currentValue.browser?.name,
+
+            ...currentValue,
+          },
+        ],
+        []
+      );
+    case "history":
       return data.reduce(
         (accumulator, currentValue, i) => [
           ...accumulator,
@@ -119,6 +139,78 @@ const getDataHandler = (data, pageName) => {
         ],
         []
       );
+    case "log":
+      return data.member_loglist.reduce(
+        (accumulator, currentValue, i) => [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
+            key: currentValue.id,
+            action: currentValue.function_param,
+            user: currentValue.member_name,
+            time: currentValue.created_at,
+            ...currentValue,
+          },
+        ],
+        []
+      );
+    case "coupon":
+      return data.couponsList.reduce((accumulator, currentValue, i) => {
+        return [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
+            name: currentValue.name,
+            category_id: currentValue.category_id,
+            brand_id: currentValue.brand_id,
+            category: currentValue.category,
+            brand: currentValue.brand,
+            desc: currentValue.desc,
+            price: currentValue.price,
+            discount: currentValue.discount,
+            image1: currentValue.image1,
+            image2: currentValue.image2,
+            image3: currentValue.image3,
+            status: currentValue.status,
+            key: currentValue.id,
+          },
+        ];
+      }, []);
+    case "coupon_category":
+      return data.reduce((accumulator, currentValue, i) => {
+        return [
+          ...accumulator,
+          {
+            // no: i + 1,
+            id: currentValue.id,
+            name: currentValue.name,
+            image1: currentValue.image1,
+            image2: currentValue.image2,
+            image3: currentValue.image3,
+            status: currentValue.status,
+            parent_id: currentValue.parent_id,
+            key: currentValue.key,
+            children: currentValue.children,
+          },
+        ];
+      }, []);
+    case "brand":
+      return data.reduce((accumulator, currentValue, i) => {
+        return [
+          ...accumulator,
+          {
+            no: i + 1,
+            id: currentValue.id,
+            name: currentValue.name,
+            image1: currentValue.image1,
+            image2: currentValue.image2,
+            image3: currentValue.image3,
+            key: currentValue.id,
+          },
+        ];
+      }, []);
     default:
       return data;
   }

@@ -2,22 +2,33 @@ import React, { useState, useEffect } from "react";
 import { Table, Space, Popconfirm, message, Spin } from "antd";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { removeData } from "@/redux/actions/data";
+// import { useLocation } from "react-router-dom";
+import { removeData } from "../../redux/actions/data";
 import { useDispatch } from "react-redux";
-import { getData, clearData } from "@/redux/actions/data";
-import { showDrawer } from "@/redux/actions/drawer";
-import { clearFilter } from "@/redux/actions/search";
+import { getData, clearData } from "../../redux/actions/data";
+import { showDrawer } from "../../redux/actions/drawer";
+import { clearFilter } from "../../redux/actions/search";
 
 const EditableDataTable = (props) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { columns, showAction } = props;
-  const { pathname } = useLocation();
-  const pageName = pathname.substring(1, pathname.length);
+  // const { pathname } = useLocation();
+  // const pageName = pathname.substring(1, pathname.length);
+  const pageName = useSelector((state) => state.route.name);
   const permission = useSelector((state) =>
     state.auth.isLoggedIn ? state.auth.user.permission : {}
   );
+  const level = useSelector((state) =>
+    state.auth.isLoggedIn ? state.auth.user.level : -1
+  );
+
+  const realPermissionForEdit = permission[pageName]
+    ? permission[pageName].edit
+    : level;
+  const realPermissionForDel = permission[pageName]
+    ? permission[pageName].del
+    : level;
   const { key, value } = useSelector((state) => state.search);
 
   const data = useSelector((state) => state.data.data);
@@ -26,11 +37,16 @@ const EditableDataTable = (props) => {
     if (key.length > 0) {
       setFilteredData(
         data.filter((d) => {
-          console.log(d[key]);
-          if (typeof d[key] === "string") {
-            return d[key].indexOf(value) > -1 ? true : false;
+          if (d[key]) {
+            if (typeof d[key] === "string") {
+              return d[key].toLowerCase().indexOf(value.toLowerCase()) > -1
+                ? true
+                : false;
+            } else {
+              return d[key].toString() === value ? true : false;
+            }
           } else {
-            return d[key].toString() === value ? true : false;
+            return false;
           }
         })
       );
@@ -62,7 +78,7 @@ const EditableDataTable = (props) => {
     dispatch(showDrawer({ id: id, title: `Edit ${pageName}`, show: true }));
   };
   const deleteButtonHandler = (id) => {
-    if (permission[pageName].del === 1) {
+    if (realPermissionForDel === 1) {
       setLoading(true);
       dispatch(removeData(pageName, { id }))
         .then(() => setLoading(false))
@@ -81,7 +97,7 @@ const EditableDataTable = (props) => {
       key: "action",
       render: (item) => (
         <Space size="middle">
-          {permission[pageName].edit === 1 && (
+          {realPermissionForEdit === 1 && (
             <EditTwoTone
               className="cursor-pointer"
               onClick={() => editButtonHandler(item.key)}
@@ -95,7 +111,7 @@ const EditableDataTable = (props) => {
             okText="Yes"
             cancelText="No"
           >
-            {permission[pageName].del === 1 && (
+            {realPermissionForDel === 1 && (
               <DeleteTwoTone
                 twoToneColor="#eb2f96"
                 className="cursor-pointer"

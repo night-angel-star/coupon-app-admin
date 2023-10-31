@@ -11,123 +11,163 @@ import {
   LoginManage,
   MachineManage,
   SurfingSiteManage,
+  CouponManage,
+  BrandManage,
+  CouponCategoryManage,
+  AdvertisementManage,
   HistoryView,
   LogView,
 } from "./pages/dashboard";
 import PrivateRoute from "./components/PrivateRoute";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const AppRoutes = [
   {
-    path: "/",
+    path: "dashboard",
     element: (
       <PrivateRoute>
         <Dashboard />
       </PrivateRoute>
     ),
-    label: <Link to="/">Dashboard</Link>,
+    label: <div>Dashboard</div>,
   },
   {
-    path: "/level",
+    path: "level",
     element: (
       <PrivateRoute>
         <LevelManage />
       </PrivateRoute>
     ),
-    label: <Link to="/level">Level</Link>,
+    label: <div>Level</div>,
   },
   {
-    path: "/member",
+    path: "member",
     element: (
       <PrivateRoute>
         <MemberManage />
       </PrivateRoute>
     ),
-    label: <Link to="/member">Member</Link>,
+    label: <div>Member</div>,
   },
   {
-    path: "/goods",
+    path: "goods",
     element: (
       <PrivateRoute>
         <GoodsManage />
       </PrivateRoute>
     ),
-    label: <Link to="/goods">Goods</Link>,
+    label: <div>Goods</div>,
   },
   {
-    path: "/job",
+    path: "job",
     element: (
       <PrivateRoute>
         <JobManage />
       </PrivateRoute>
     ),
-    label: <Link to="/job">Jobs</Link>,
+    label: <div>Job</div>,
   },
   {
-    path: "/proxy",
+    path: "proxy",
     element: (
       <PrivateRoute>
         <ProxyManage />
       </PrivateRoute>
     ),
-    label: <Link to="/proxy">Proxy</Link>,
+    label: <div>Proxy</div>,
   },
   {
-    path: "/browser",
+    path: "browser",
     element: (
       <PrivateRoute>
         <BrowserManage />
       </PrivateRoute>
     ),
-    label: <Link to="/browser">Browser</Link>,
+    label: <div>Browser</div>,
   },
   {
-    path: "/login",
+    path: "login",
     element: (
       <PrivateRoute>
         <LoginManage />
       </PrivateRoute>
     ),
-    label: <Link to="/login">Login</Link>,
+    label: <div>Login</div>,
   },
   {
-    path: "/machine",
+    path: "machine",
     element: (
       <PrivateRoute>
         <MachineManage />
       </PrivateRoute>
     ),
-    label: <Link to="/machine">Machine</Link>,
+    label: <div>Machine</div>,
   },
   {
-    path: "/surfing",
+    path: "surfing",
     element: (
       <PrivateRoute>
         <SurfingSiteManage />
       </PrivateRoute>
     ),
-    label: <Link to="/surfing">Surfing Site</Link>,
+    label: <div>Surfing</div>,
   },
   {
-    path: "/history",
+    path: "coupon_category",
+    element: (
+      <PrivateRoute>
+        <CouponCategoryManage />
+      </PrivateRoute>
+    ),
+    label: <div>Coupon Category</div>,
+  },
+  {
+    path: "brand",
+    element: (
+      <PrivateRoute>
+        <BrandManage />
+      </PrivateRoute>
+    ),
+    label: <div>Coupon Brand</div>,
+  },
+  {
+    path: "coupon",
+    element: (
+      <PrivateRoute>
+        <CouponManage />
+      </PrivateRoute>
+    ),
+    label: <div>Coupon Product</div>,
+  },
+  {
+    path: "advertisement",
+    element: (
+      <PrivateRoute>
+        <AdvertisementManage />
+      </PrivateRoute>
+    ),
+    label: <div>Advertisement</div>,
+  },
+  {
+    path: "history",
     element: (
       <PrivateRoute>
         <HistoryView />
       </PrivateRoute>
     ),
-    label: <Link to="/history">History</Link>,
+    label: <div>History</div>,
   },
   {
-    path: "/log",
+    path: "log",
     element: (
       <PrivateRoute>
         <LogView />
       </PrivateRoute>
     ),
-    label: <Link to="/log">Log</Link>,
+    label: <div>Log</div>,
   },
   {
-    path: "/auth/login",
+    path: "auth/login",
     element: <Login />,
   },
 ];

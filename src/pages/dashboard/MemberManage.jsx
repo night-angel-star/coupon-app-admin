@@ -1,15 +1,16 @@
-import DataTable from "@/components/Tables/DataTable";
+import DataTable from "../../components/Tables/DataTable";
 import { Row, Space, Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import Search from "@/components/Search";
-import tableColumns from "@/constant/tableColumns";
-import { useLocation } from "react-router-dom";
+import Search from "../../components/Search";
+import tableColumns from "../../constant/tableColumns";
+// import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { showDrawer } from "@/redux/actions/drawer";
+import { showDrawer } from "../../redux/actions/drawer";
 export const MemberManage = () => {
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const pageName = pathname.substring(1, pathname.length);
+  // const pageName = pathname.substring(1, pathname.length);
+  const pageName = useSelector((state) => state.route.name);
   const permission = useSelector((state) =>
     state.auth.isLoggedIn ? state.auth.user.permission : {}
   );

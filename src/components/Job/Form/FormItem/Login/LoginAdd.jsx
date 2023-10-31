@@ -1,32 +1,32 @@
 import { Form, Input, Button, Row, Col, Modal } from "antd";
 import { useEffect, useState } from "react";
 import ModalContent from "./ModalContent";
+import { useSelector } from "react-redux";
 
-const LoginAdd = ({ form }) => {
+const LoginAdd = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState({});
+  const editId = useSelector((state) => state.drawer.id);
+  useEffect(() => {
+    if (editId && editId !== 0) {
+      setCurrentData(props.initialData ? props.initialData : {});
+    } else {
+      setCurrentData({});
+    }
+  }, [editId, props.initialData]);
   useEffect(() => {
     modalOpen && setModalOpen(false);
-    form.setFieldValue("login", currentData.id);
+    props.form.setFieldValue("login_id", currentData.id);
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentData]);
+
   const onDelete = () => {
-    form.setFieldValue("login", "");
+    props.form.setFieldValue("login_id", "");
     setCurrentData({});
   };
   return (
     <div>
-      <Form.Item
-        label="Login"
-        name="login"
-        rules={[
-          {
-            required: true,
-            message: "Please input machine!",
-          },
-        ]}
-        hidden
-      >
+      <Form.Item label="Login" name="login_id" hidden>
         <Input></Input>
       </Form.Item>
       <Form.Item label="Login">

@@ -16,3 +16,5 @@ export const HIDE_DRAWER = "HIDE_DRAWER";
 
 export const SET_FILTER = "SET_FILTER";
 export const CLEAR_FILTER = "CLEAR_FILTER";
+
+export const SET_ROUTE = "SET_ROUTE";

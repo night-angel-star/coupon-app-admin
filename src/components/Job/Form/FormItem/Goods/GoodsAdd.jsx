@@ -2,24 +2,41 @@ import { Form, Input, Button, Row, Col, Modal, Table } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import ModalContent from "./ModalContent";
-import tableColumns from "@/constant/tableColumns";
+import tableColumns from "../../../../../constant/tableColumns";
+import { useSelector } from "react-redux";
 
-const GoodsAdd = ({ form }) => {
+const GoodsAdd = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState([]);
+  const editId = useSelector((state) => state.drawer.id);
   useEffect(() => {
-    form.setFieldValue(
+    if (editId && editId !== 0) {
+      setCurrentData(props.initialData);
+    } else {
+      setCurrentData([]);
+    }
+  }, [editId, props.initialData]);
+  useEffect(() => {
+    props.form.setFieldValue(
       "goods",
       currentData.map((item) => item.id)
     );
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentData]);
 
-  const onDelete = (no) => {
-    setCurrentData(currentData.filter((item) => item.no !== no));
+  const onDelete = (id) => {
+    setCurrentData(currentData.filter((item) => item.id !== id));
   };
+
+  //eslint-disable-next-line
+  const [tableColumnsNo, ...restTableColumns] = tableColumns.goods;
   const columns = [
-    ...tableColumns.goods,
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    ...restTableColumns,
     {
       title: "Action",
       key: "action",
@@ -27,24 +44,14 @@ const GoodsAdd = ({ form }) => {
         <DeleteTwoTone
           twoToneColor="#eb2f96"
           className="cursor-pointer"
-          onClick={() => onDelete(item.no)}
+          onClick={() => onDelete(item.id)}
         />
       ),
     },
   ];
   return (
     <div>
-      <Form.Item
-        label="Goods"
-        name="goods"
-        rules={[
-          {
-            required: true,
-            message: "Please input goods!",
-          },
-        ]}
-        hidden
-      >
+      <Form.Item label="Goods" name="goods" hidden>
         <Input></Input>
       </Form.Item>
       <Form.Item label="Goods">
@@ -65,9 +72,9 @@ const GoodsAdd = ({ form }) => {
               >
                 OK
               </Button>,
-              <Button key="cancel" onClick={() => setModalOpen(false)}>
-                Cancel
-              </Button>,
+              // <Button key="cancel" onClick={() => setModalOpen(false)}>
+              //   Cancel
+              // </Button>,
             ]}
             onCancel={() => setModalOpen(false)}
           >
@@ -80,9 +87,12 @@ const GoodsAdd = ({ form }) => {
           </Modal>
         )}
       </Form.Item>
-      <Row justify="end" className="mb-2">
+      <Row justify="end" className="ml-10 mb-2">
         <Col className="w-full">
-          <Table columns={columns} dataSource={currentData}></Table>
+          <Table
+            columns={columns}
+            dataSource={currentData.map((data, i) => ({ ...data, key: i }))}
+          ></Table>
         </Col>
       </Row>
     </div>

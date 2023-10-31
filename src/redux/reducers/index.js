@@ -4,6 +4,7 @@ import message from "./message";
 import data from "./data";
 import drawer from "./drawer";
 import search from "./search";
+import route from "./route";
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   data,
   drawer,
   search,
+  route,
 });

@@ -1,8 +1,8 @@
 import { Form, Input, Button, Spin } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "@/redux/actions/data";
-import { hideDrawer } from "@/redux/actions/drawer";
+import { addData } from "../../../redux/actions/data";
+import { hideDrawer } from "../../../redux/actions/drawer";
 
 const AddForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,6 @@ const AddForm = (props) => {
       form.resetFields();
       try {
         if (editId !== 0) {
-          console.log(initialData);
           form.setFieldsValue(initialData);
         }
       } catch {}
@@ -130,7 +129,7 @@ const AddForm = (props) => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

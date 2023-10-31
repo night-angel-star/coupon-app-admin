@@ -1,29 +1,41 @@
 import { Table, Checkbox } from "antd";
-import tableColumns from "@/constant/tableColumns";
-import DashboardService from "@/services/dashboard.service";
+import tableColumns from "../../../../../constant/tableColumns";
+import DashboardService from "../../../../../services/dashboard.service";
 import { useEffect, useState } from "react";
-import getDataHandler from "@/utils/getDataHandler";
+import getDataHandler from "../../../../../utils/getDataHandler";
+import { useSelector } from "react-redux";
 
 const ModalContent = (props) => {
   let [tableColumnsNo, ...tableColumnsRest] = tableColumns.surfing;
   const [data, setData] = useState([]);
 
+  const showDrawer = useSelector((state) => state.drawer.show);
+  const editId = useSelector((state) => state.drawer.id);
+
+  useEffect(() => {
+    if (showDrawer === true) {
+      setData([]);
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editId, showDrawer]);
+
   tableColumnsNo = {
-    ...tableColumnsNo,
-    render: (no) => (
+    dataIndex: "id",
+    key: "id",
+    render: (id) => (
       <Checkbox
-        checked={props.currentData.some((item) => item.no === no)}
-        onClick={() => checkData(no)}
+        checked={props.currentData.some((item) => item.id === id)}
+        onClick={() => checkData(id)}
       />
     ),
   };
-  const checkData = (no) => {
-    if (props.currentData.some((item) => item.no === no)) {
-      props.setCurrentData(props.currentData.filter((d) => d.no !== no));
+  const checkData = (id) => {
+    if (props.currentData.some((item) => item.id === id)) {
+      props.setCurrentData(props.currentData.filter((d) => d.id !== id));
     } else {
       props.setCurrentData([
         ...props.currentData,
-        ...data.filter((d) => d.no === no),
+        ...data.filter((d) => d.id === id),
       ]);
     }
   };

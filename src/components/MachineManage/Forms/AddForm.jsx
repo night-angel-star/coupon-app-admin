@@ -1,8 +1,8 @@
 import { Form, Input, Button, Spin, Select } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "@/redux/actions/data";
-import { hideDrawer } from "@/redux/actions/drawer";
+import { addData } from "../../../redux/actions/data";
+import { hideDrawer } from "../../../redux/actions/drawer";
 
 const AddForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -103,7 +103,7 @@ const AddForm = (props) => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>

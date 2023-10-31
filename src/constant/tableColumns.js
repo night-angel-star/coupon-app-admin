@@ -229,13 +229,23 @@ const tableColumns = {
     },
     {
       title: "login",
-      dataIndex: "login",
-      key: "login",
+      dataIndex: "login_user",
+      key: "login_user",
     },
     {
       title: "machine",
-      dataIndex: "machine",
-      key: "machine",
+      dataIndex: "machine_id",
+      key: "machine_id",
+    },
+    {
+      title: "proxy",
+      dataIndex: "proxy_ip",
+      key: "proxy_ip",
+    },
+    {
+      title: "browser",
+      dataIndex: "browser_name",
+      key: "browser_name",
     },
     {
       title: "Goods",
@@ -250,6 +260,67 @@ const tableColumns = {
       key: "surfing",
       render: (surfing) =>
         surfing && surfing.map((item, i) => <Tag key={i}>{item.name}</Tag>),
+    },
+  ],
+  coupon_category: [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+  ],
+  coupon: [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Description",
+      dataIndex: "desc",
+      key: "desc",
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Discount(%)",
+      dataIndex: "discount",
+      key: "discount",
+    },
+  ],
+  brand: [
+    {
+      title: "No",
+      dataIndex: "no",
+      key: "no",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
   ],
 };

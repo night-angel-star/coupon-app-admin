@@ -2,31 +2,53 @@ import { Form, Input, Button, Row, Col, Modal, Table, InputNumber } from "antd";
 import { DeleteTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import ModalContent from "./ModalContent";
-import tableColumns from "@/constant/tableColumns";
+import tableColumns from "../../../../../constant/tableColumns";
+import { useSelector } from "react-redux";
 
-const SurfingAdd = ({ form }) => {
+const SurfingAdd = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentData, setCurrentData] = useState([]);
+  const editId = useSelector((state) => state.drawer.id);
   useEffect(() => {
-    setCurrentData(currentData.map((item) => ({ ...item, delay: 0 })));
+    if (editId && editId !== 0) {
+      setCurrentData(props.initialData);
+    } else {
+      setCurrentData([]);
+    }
+  }, [editId, props.initialData]);
+
+  useEffect(() => {
+    console.log();
+  }, [currentData]);
+  useEffect(() => {
+    if (currentData.length !== 0) {
+      setCurrentData(
+        currentData.map((item) => ({
+          ...item,
+          delay: item.delay ? item.delay : 0,
+        }))
+      );
+    }
 
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalOpen]);
   useEffect(() => {
-    form.setFieldValue(
+    props.form.setFieldValue(
       "surfing",
       currentData.map((item) => ({ id: item.id, delay: item.delay }))
     );
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentData]);
-  const onDelete = (no) => {
-    setCurrentData(currentData.filter((item) => item.no !== no));
+  const onDelete = (id) => {
+    setCurrentData(currentData.filter((item) => item.id !== id));
   };
-  const onChangeDelay = (no, value) => {
+  //eslint-disable-next-line
+  const [tableColumnsNo, ...restTableColumns] = tableColumns.surfing;
+  const onChangeDelay = (id, value) => {
     setCurrentData(
       currentData.reduce(
         (accumulator, currentValue) =>
-          currentValue.no === no
+          currentValue.id === id
             ? [...accumulator, { ...currentValue, delay: value }]
             : [...accumulator, currentValue],
         []
@@ -34,7 +56,12 @@ const SurfingAdd = ({ form }) => {
     );
   };
   const columns = [
-    ...tableColumns.surfing,
+    {
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    ...restTableColumns,
     {
       title: "Delay(s)",
       key: "delay",
@@ -42,7 +69,7 @@ const SurfingAdd = ({ form }) => {
         <InputNumber
           value={item.delay}
           min={0}
-          onChange={(value) => onChangeDelay(item.no, value)}
+          onChange={(value) => onChangeDelay(item.id, value)}
         />
       ),
     },
@@ -53,24 +80,14 @@ const SurfingAdd = ({ form }) => {
         <DeleteTwoTone
           twoToneColor="#eb2f96"
           className="cursor-pointer"
-          onClick={() => onDelete(item.no)}
+          onClick={() => onDelete(item.id)}
         />
       ),
     },
   ];
   return (
     <div>
-      <Form.Item
-        label="Surfing"
-        name="surfing"
-        rules={[
-          {
-            required: true,
-            message: "Please input surfing!",
-          },
-        ]}
-        hidden
-      >
+      <Form.Item label="Surfing" name="surfing" hidden>
         <Input></Input>
       </Form.Item>
       <Form.Item label="Surfing">
@@ -91,9 +108,12 @@ const SurfingAdd = ({ form }) => {
               >
                 OK
               </Button>,
-              <Button key="cancel" onClick={() => setModalOpen(false)}>
-                Cancel
-              </Button>,
+              // <Button
+              //     key="cancel"
+              //     onClick={() => setModalOpen(false)}
+              // >
+              //     Cancel
+              // </Button>,
             ]}
             onCancel={() => setModalOpen(false)}
           >
@@ -106,9 +126,15 @@ const SurfingAdd = ({ form }) => {
           </Modal>
         )}
       </Form.Item>
-      <Row justify="end" className="mb-2">
+      <Row justify="end" className="ml-10 mb-2">
         <Col className="w-full">
-          <Table columns={columns} dataSource={currentData}></Table>
+          <Table
+            columns={columns}
+            dataSource={currentData.map((data, i) => ({
+              ...data,
+              key: i,
+            }))}
+          ></Table>
         </Col>
       </Row>
     </div>

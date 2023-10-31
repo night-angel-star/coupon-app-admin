@@ -1,6 +1,12 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, SET_MESSAGE } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  LOGOUT,
+  SET_MESSAGE,
+  SET_ROUTE,
+} from "./types";
 
-import AuthService from "@/services/auth.service";
+import AuthService from "../../services/auth.service";
 
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
@@ -15,7 +21,7 @@ export const login = (username, password) => (dispatch) => {
             ...permission,
             [r.page]: {
               ...permission[r.page],
-              [r.operation]: 1,
+              [r.operation]: r.permission,
             },
           })
       );
@@ -24,6 +30,7 @@ export const login = (username, password) => (dispatch) => {
         name: data.user.name,
         level: data.user.level_id,
         permission: permission,
+        parent: data.user.parent,
         token: data.access_token,
       };
       localStorage.setItem("token", data.access_token);
@@ -72,5 +79,12 @@ export const logout = () => (dispatch) => {
   localStorage.clear();
   dispatch({
     type: LOGOUT,
+  });
+  dispatch({
+    type: SET_ROUTE,
+    payload: {
+      name: "auth/login",
+      param: null,
+    },
   });
 };

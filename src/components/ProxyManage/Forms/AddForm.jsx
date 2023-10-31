@@ -1,8 +1,8 @@
 import { Form, Input, Button, Spin } from "antd";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addData } from "@/redux/actions/data";
-import { hideDrawer } from "@/redux/actions/drawer";
+import { addData } from "../../../redux/actions/data";
+import { hideDrawer } from "../../../redux/actions/drawer";
 
 const AddForm = (props) => {
   const [loading, setLoading] = useState(false);
@@ -85,28 +85,10 @@ const AddForm = (props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item
-            label="User Name"
-            name="user"
-            rules={[
-              {
-                required: true,
-                message: "Please input user name!",
-              },
-            ]}
-          >
+          <Form.Item label="User Name" name="user">
             <Input />
           </Form.Item>
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input password!",
-              },
-            ]}
-          >
+          <Form.Item label="Password" name="password">
             <Input.Password />
           </Form.Item>
 
@@ -117,7 +99,7 @@ const AddForm = (props) => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Add
+              Submit
             </Button>
           </Form.Item>
         </Form>
