@@ -39,11 +39,13 @@ const tableColumns = {
       title: "No",
       dataIndex: "no",
       key: "no",
+      fixed: "left",
     },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
     },
     {
       title: "Nvid",
