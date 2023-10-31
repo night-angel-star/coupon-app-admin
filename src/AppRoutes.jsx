@@ -1,24 +1,31 @@
-import { Login } from "./pages/auth";
-import { Dashboard } from "./pages/dashboard";
+import { lazy } from "react";
 
-import {
-  LevelManage,
-  MemberManage,
-  GoodsManage,
-  JobManage,
-  ProxyManage,
-  BrowserManage,
-  LoginManage,
-  MachineManage,
-  SurfingSiteManage,
-  CouponManage,
-  BrandManage,
-  CouponCategoryManage,
-  AdvertisementManage,
-  HistoryView,
-  LogView,
-} from "./pages/dashboard";
-import PrivateRoute from "./components/PrivateRoute";
+const LevelManage = lazy(() => import("./pages/dashboard/LevelManage"));
+const MemberManage = lazy(() => import("./pages/dashboard/MemberManage"));
+const GoodsManage = lazy(() => import("./pages/dashboard/GoodsManage"));
+const JobManage = lazy(() => import("./pages/dashboard/JobManage"));
+const ProxyManage = lazy(() => import("./pages/dashboard/ProxyManage"));
+const BrowserManage = lazy(() => import("./pages/dashboard/BrowserManage"));
+const LoginManage = lazy(() => import("./pages/dashboard/LoginManage"));
+const MachineManage = lazy(() => import("./pages/dashboard/MachineManage"));
+const SurfingSiteManage = lazy(() =>
+  import("./pages/dashboard/SurfingSiteManage")
+);
+const CouponManage = lazy(() => import("./pages/dashboard/CouponManage"));
+const BrandManage = lazy(() => import("./pages/dashboard/BrandManage"));
+const CouponCategoryManage = lazy(() =>
+  import("./pages/dashboard/CouponCategoryManage")
+);
+const AdvertisementManage = lazy(() =>
+  import("./pages/dashboard/AdvertisementManage")
+);
+const HistoryView = lazy(() => import("./pages/dashboard/HistoryView"));
+const LogView = lazy(() => import("./pages/dashboard/LogView"));
+
+const PrivateRoute = lazy(() => import("./components/PrivateRoute/index"));
+
+const Login = lazy(() => import("./pages/auth/Login"));
+const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
 // import { Link } from "react-router-dom";
 
 const AppRoutes = [
