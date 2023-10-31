@@ -22,6 +22,7 @@ const ModalContent = (props) => {
   tableColumnsNo = {
     dataIndex: "id",
     key: "id",
+    fixed: "left",
     render: (id) => (
       <Checkbox
         checked={props.currentData.some((item) => item.id === id)}
@@ -54,7 +55,11 @@ const ModalContent = (props) => {
   const columns = [tableColumnsNo, ...tableColumnsRest];
   return (
     <div>
-      <Table columns={columns} dataSource={data}></Table>
+      <Table
+        columns={columns}
+        dataSource={data}
+        scroll={{ x: "max-content" }}
+      ></Table>
     </div>
   );
 };

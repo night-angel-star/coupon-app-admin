@@ -95,6 +95,7 @@ const EditableDataTable = (props) => {
     {
       title: "Action",
       key: "action",
+      fixed: "right",
       render: (item) => (
         <Space size="middle">
           {realPermissionForEdit === 1 && (
@@ -127,6 +128,7 @@ const EditableDataTable = (props) => {
       <Table
         columns={showAction ? columnWithControl : columns}
         dataSource={filteredData}
+        scroll={{ x: "max-content" }}
       />
     </Spin>
   );

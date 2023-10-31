@@ -221,21 +221,25 @@ const tableColumns = {
       title: "No",
       dataIndex: "no",
       key: "no",
+      fixed: "left",
     },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
     },
     {
       title: "login",
       dataIndex: "login_user",
       key: "login_user",
+      fixed: "left",
     },
     {
       title: "machine",
       dataIndex: "machine_id",
       key: "machine_id",
+      fixed: "left",
     },
     {
       title: "proxy",
