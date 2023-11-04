@@ -34,11 +34,11 @@ export const MachineManage = () => {
       <Row justify={"end"} className="p-2">
         <Space>
           <Search fields={searchFields} />
-          {permission[pageName].add === 1 && (
+          {/* {permission[pageName].add === 1 && (
             <Button type="primary" icon={<PlusOutlined />} onClick={openDrawer}>
               Add
             </Button>
-          )}
+          )} */}
         </Space>
       </Row>
       <DataTable columns={columns} showAction />
